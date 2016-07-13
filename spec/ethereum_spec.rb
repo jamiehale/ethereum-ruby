@@ -3,18 +3,18 @@ require 'spec_helper'
 describe Ethereum do
 
   before(:all) do
-    @client = Ethereum::HttpClient.new("172.16.135.102", "8545")
+    @client = Ethereum::HttpClient.new("localhost", "8545")
     @formatter = Ethereum::Formatter.new
   end
 
   describe "Ethereum Version" do
     it 'has a version number' do
-      expect(Ethereum::VERSION).to eq("0.4.90")
+      expect(Ethereum::VERSION).to_not be_nil
     end
   end
-  
+
   describe "Deployment" do
-    it "should deploy a contract with parameters" do
+    it "should deploy a contract with parameters", :wip => true do
       @init = Ethereum::Initializer.new("#{ENV['PWD']}/spec/fixtures/ContractWithParams.sol", @client)
       @init.build_all
       @contract_with_params = ContractWithParams.new
@@ -36,12 +36,12 @@ describe Ethereum do
       @simple_name_registry.deploy_and_wait(60)
     end
 
-    it "should perform a contract transaction, wait for its completion, return an Ethereum::Transaction object" do
+    it "should perform a contract transaction, wait for its completion, return an Ethereum::Transaction object", :wip => true do
       tx = @simple_name_registry.transact_and_wait_register("0x5b6cb65d40b0e27fab87a2180abcab22174a2d45", "minter.contract.dgx")
       expect(tx.class).to be(Ethereum::Transaction)
     end
 
-    it "should test a call_(Ethereum Contract Function)" do
+    it "should test a call_(Ethereum Contract Function)", :wip => true do
       expect(true).to be(true)
     end
 
